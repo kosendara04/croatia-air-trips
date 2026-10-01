@@ -1,9 +1,9 @@
 # Croatia Air Trips
 
-Java Swing desktop application for managing panoramic flights and reservations, developed as a final-year project.
+Java Swing desktop application for managing panoramic flights and reservations, developed as a final-year thesis.
+
 
 ![Croatia Air Trips welcome screen](docs/screenshots/home.png)
-
 ## Features
 
 - Separate user and administrator interfaces
