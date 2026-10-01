@@ -106,9 +106,7 @@ Both login roles use the `KORISNIK` table. The exported `ADMIN` table is retaine
 
 The scripts do not include original database contents or database connection credentials. `schema.sql` creates tables in the database you select; it does not select, create or delete a database. The demo script is intended for a fresh schema, not repeated imports into an existing working database.
 
-## Known limitations
-
-- Excel export currently writes date values without a display format, so Excel may show serial numbers until the cells are formatted as dates.
+.
 
 ## Validation
 
