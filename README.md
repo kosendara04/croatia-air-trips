@@ -1,9 +1,9 @@
 # Croatia Air Trips
 
-Java Swing desktop application for managing panoramic flights and reservations, developed as a final-year thesis.
-
+Java Swing desktop application for managing panoramic flights and reservations, developed as a final-year project.
 
 ![Croatia Air Trips welcome screen](docs/screenshots/home.png)
+
 ## Features
 
 - Separate user and administrator interfaces
@@ -61,14 +61,14 @@ The application interface is in Croatian.
 
 ## Technologies
 
-Java, Swing, JDBC, MySQL, Apache POI and Eclipse.
+Java, Swing, JDBC, MySQL/MariaDB, Apache POI and Eclipse.
 
 ## Running the project
 
 1. Install a JDK and Eclipse IDE for Java Developers. Compilation was checked with JDK 24.
 2. Download or clone this repository.
 3. In Eclipse, select **File > Import > General > Existing Projects into Workspace** and select the project folder.
-4. Prepare a MySQL database with the application's schema (see the database note below).
+4. Create an empty database and import `database/schema.sql`, then optionally `database/demo-data.sql` (see Database setup below).
 5. In **Run > Run Configurations > Java Application**, choose `panorama.GlavnaStr` as the main class.
 6. Under **Environment**, add your own connection settings:
 
@@ -82,9 +82,29 @@ Java, Swing, JDBC, MySQL, Apache POI and Eclipse.
 
 Database credentials are read from environment variables and are not included in the source code.
 
-## Database availability
+## Database setup
 
-The supplied project archive did not contain a database schema or sample-data SQL script. This repository currently contains the application source and dependencies; running database-dependent features requires a compatible MySQL database. A sanitized schema and fictional sample data still need to be added for a self-contained demo.
+The schema was exported from MariaDB 11.8 using HeidiSQL. The application uses MySQL Connector/J and a `jdbc:mysql:` connection URL. Import and end-to-end compatibility have not yet been tested in a local database.
+
+1. Connect to your own local MySQL/MariaDB server in HeidiSQL.
+2. Create a **new, empty** database named `panoramski_letovi`, using `utf8mb4`.
+3. Select that database in HeidiSQL.
+4. Open `database/schema.sql` with **File > Load SQL file**, then execute the script in the selected database.
+5. Optionally load and execute `database/demo-data.sql` **once**, after the schema. It supplies fictional accounts, aircraft, two future flights and one reservation.
+6. Set `DB_URL`, `DB_USER` and `DB_PASSWORD` in Eclipse as described above. These are your own database connection credentials, separate from the application accounts below.
+
+### Demo application accounts
+
+| Login screen | Email | Password |
+| --- | --- | --- |
+| Administrator | `admin@example.com` | `DemoFlights2026!` |
+| User | `putnik@example.com` | `DemoFlights2026!` |
+
+These are intentionally public, fictional accounts for a local demo. Their stored password hashes match the current application's SHA-256 login implementation. Without the optional demo data the tables are empty and these accounts do not exist.
+
+Both login roles use the `KORISNIK` table. The exported `ADMIN` table is retained for fidelity to the original schema, but the current login implementation does not query it.
+
+The scripts do not include original database contents or database connection credentials. `schema.sql` creates tables in the database you select; it does not select, create or delete a database. The demo script is intended for a fresh schema, not repeated imports into an existing working database.
 
 ## Known limitations
 
