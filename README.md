@@ -2,6 +2,8 @@
 
 Java Swing desktop application for managing panoramic flights and reservations, developed as a final-year project.
 
+![Croatia Air Trips welcome screen](docs/screenshots/home.png)
+
 ## Features
 
 - Separate user and administrator interfaces
@@ -10,6 +12,52 @@ Java Swing desktop application for managing panoramic flights and reservations, 
 - Administration of flights, aircraft, users and reservations
 - Reports exported to CSV, TXT and Excel (XLSX)
 - MySQL database access through JDBC and SQL queries
+
+## Screenshots
+
+The application interface is in Croatian.
+
+<details>
+<summary>User interface</summary>
+
+### User login
+
+![User login](docs/screenshots/user-login.png)
+
+### Flight browsing
+
+![Flight browsing](docs/screenshots/flight-list.png)
+
+### Flight reservation
+
+![Flight reservation](docs/screenshots/flight-reservation.png)
+
+### Reservation history
+
+![Reservation history](docs/screenshots/reservation-history.png)
+
+</details>
+
+<details>
+<summary>Administrator interface</summary>
+
+### Flight management
+
+![Flight management](docs/screenshots/admin-flights.png)
+
+### Aircraft management
+
+![Aircraft management](docs/screenshots/admin-aircraft.png)
+
+### Reservation management
+
+![Reservation management](docs/screenshots/admin-reservations.png)
+
+### Reports
+
+![Reports](docs/screenshots/admin-reports.png)
+
+</details>
 
 ## Technologies
 
@@ -38,6 +86,10 @@ Database credentials are read from environment variables and are not included in
 
 The supplied project archive did not contain a database schema or sample-data SQL script. This repository currently contains the application source and dependencies; running database-dependent features requires a compatible MySQL database. A sanitized schema and fictional sample data still need to be added for a self-contained demo.
 
+## Known limitations
+
+- Excel export currently writes date values without a display format, so Excel may show serial numbers until the cells are formatted as dates.
+
 ## Validation
 
 - All 27 Java source files compiled during preparation.
@@ -46,4 +98,4 @@ The supplied project archive did not contain a database schema or sample-data SQ
 
 ## Project context
 
-Academic final-year thesis by Marko Kos. This repository demonstrates desktop application development, database integration and reporting.
+Academic final-year project by Marko Kos. This repository demonstrates desktop application development, database integration and reporting.
