@@ -341,6 +341,10 @@ public class PregledIzvjestaja {
 
         try (XSSFWorkbook radnaKnjiga = new XSSFWorkbook()) {
             Sheet list = radnaKnjiga.createSheet(nazivLista);
+            CellStyle stilDatuma = radnaKnjiga.createCellStyle();
+                stilDatuma.setDataFormat(
+                radnaKnjiga.createDataFormat().getFormat("dd.mm.yyyy hh:mm")
+);
 
             CellStyle stilZaglavlja = radnaKnjiga.createCellStyle();
             Font fontZaglavlja = radnaKnjiga.createFont();
@@ -365,6 +369,7 @@ public class PregledIzvjestaja {
                         celija.setCellValue(((Number) vrijednost).doubleValue());
                     } else if (vrijednost instanceof java.util.Date) {
                         celija.setCellValue((java.util.Date) vrijednost);
+                        celija.setCellStyle(stilDatuma);
                     } else {
                         celija.setCellValue(vrijednost.toString());
                     }
