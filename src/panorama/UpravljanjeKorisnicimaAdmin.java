@@ -13,7 +13,8 @@ import static model.BazaPodataka.uspostaviVezu;
 public class UpravljanjeKorisnicimaAdmin {
     public JFrame okvir;
     private JTable tablicaKorisnika;
-    private JTextField txtIme, txtEmail, txtLozinka, txtKontaktBroj;
+    private JTextField txtIme, txtEmail, txtKontaktBroj;
+    private JPasswordField txtLozinka;
 
     public UpravljanjeKorisnicimaAdmin() {
         inicijaliziraj();
@@ -72,7 +73,7 @@ public class UpravljanjeKorisnicimaAdmin {
         JLabel lblLozinka = UIStil.urediEtiketu("Lozinka:");
         lblLozinka.setBounds(380, 28, 110, 20);
         formPanel.add(lblLozinka);
-        txtLozinka = new JTextField();
+        txtLozinka = new JPasswordField();
         txtLozinka.setBounds(500, 28, 210, 26);
         txtLozinka.setToolTipText("Kod ažuriranja ostavite prazno ako ne mijenjate lozinku");
         UIStil.urediPolje(txtLozinka);
@@ -182,7 +183,7 @@ public class UpravljanjeKorisnicimaAdmin {
             try (PreparedStatement izjava = veza.prepareStatement(upit)) {
                 izjava.setString(1, txtIme.getText().trim());
                 izjava.setString(2, txtEmail.getText().trim());
-                izjava.setString(3, SigurnostUtil.hesirajLozinku(txtLozinka.getText().trim()));
+                izjava.setString(3, SigurnostUtil.hesirajLozinku(new String(txtLozinka.getPassword()).trim()));
                 izjava.setString(4, txtKontaktBroj.getText().trim());
 
                 int obradjeniRedovi = izjava.executeUpdate();
@@ -211,7 +212,7 @@ public class UpravljanjeKorisnicimaAdmin {
         String ime = txtIme.getText().trim();
         String email = txtEmail.getText().trim();
         String kontakt = txtKontaktBroj.getText().trim();
-        String lozinka = txtLozinka.getText().trim();
+        String lozinka = new String(txtLozinka.getPassword()).trim();
         boolean mijenjaLozinku = !lozinka.isEmpty();
 
         String upit = mijenjaLozinku
@@ -284,7 +285,7 @@ public class UpravljanjeKorisnicimaAdmin {
     private boolean validirajPoljaZaDodavanje() {
         if (txtIme.getText().trim().isEmpty() ||
                 txtEmail.getText().trim().isEmpty() ||
-                txtLozinka.getText().trim().isEmpty() ||
+                new String(txtLozinka.getPassword()).trim().isEmpty() ||
                 txtKontaktBroj.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(okvir, "Sva polja su obavezna", "Greška validacije", JOptionPane.WARNING_MESSAGE);
             return false;
@@ -295,7 +296,7 @@ public class UpravljanjeKorisnicimaAdmin {
             return false;
         }
 
-        if (txtLozinka.getText().trim().length() < 6) {
+        if (new String(txtLozinka.getPassword()).trim().length() < 6) {
             JOptionPane.showMessageDialog(okvir, "Lozinka mora imati najmanje 6 znakova", "Greška validacije", JOptionPane.WARNING_MESSAGE);
             return false;
         }
@@ -316,7 +317,7 @@ public class UpravljanjeKorisnicimaAdmin {
             return false;
         }
 
-        String lozinka = txtLozinka.getText().trim();
+        String lozinka = new String(txtLozinka.getPassword()).trim();
         if (!lozinka.isEmpty() && lozinka.length() < 6) {
             JOptionPane.showMessageDialog(okvir, "Ako mijenjate lozinku, mora imati najmanje 6 znakova", "Greška validacije", JOptionPane.WARNING_MESSAGE);
             return false;
