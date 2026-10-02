@@ -1,17 +1,41 @@
 # Croatia Air Trips
 
-Java Swing desktop application for managing panoramic flights and reservations, developed as a final-year project.
+Java Swing desktop application for managing panoramic flights, users and flight reservations. The project was developed as an academic final-year project and demonstrates desktop GUI development, relational database integration, role-based application flows and report export.
 
 ![Croatia Air Trips welcome screen](docs/screenshots/home.png)
 
-## Features
+## Highlights
 
 - Separate user and administrator interfaces
 - Flight browsing and seat reservations
-- User reservation history
+- Reservation history for logged-in users
 - Administration of flights, aircraft, users and reservations
-- Reports exported to CSV, TXT and Excel (XLSX)
-- MySQL database access through JDBC and SQL queries
+- Reports for reservations, users, flights and aircraft
+- Export of reports to CSV, TXT and Excel (XLSX)
+- MySQL/MariaDB integration through JDBC
+- Prepared statements for database operations
+- Database credentials supplied through environment variables rather than hardcoded in source code
+
+## Technologies
+
+- Java
+- Swing
+- JDBC
+- MySQL / MariaDB
+- Apache POI
+- Eclipse IDE
+
+## Application structure
+
+The project separates application responsibilities across packages:
+
+- `model` — database access, domain models and password hashing utilities
+- `panorama` — Swing windows, panels and user interface logic
+- `kontroller` — controllers used for selected application views
+- `database` — sanitized database schema and fictional demo data
+- `docs/screenshots` — application screenshots
+
+The application uses the `KORISNIK.uloga` field to distinguish `user` and `admin` accounts.
 
 ## Screenshots
 
@@ -59,18 +83,23 @@ The application interface is in Croatian.
 
 </details>
 
-## Technologies
-
-Java, Swing, JDBC, MySQL/MariaDB, Apache POI and Eclipse.
-
 ## Running the project
 
-1. Install a JDK and Eclipse IDE for Java Developers. Compilation was checked with JDK 24.
-2. Download or clone this repository.
-3. In Eclipse, select **File > Import > General > Existing Projects into Workspace** and select the project folder.
-4. Create an empty database and import `database/schema.sql`, then optionally `database/demo-data.sql` (see Database setup below).
-5. In **Run > Run Configurations > Java Application**, choose `panorama.GlavnaStr` as the main class.
-6. Under **Environment**, add your own connection settings:
+### Requirements
+
+- JDK 24 (the source was compiled with JDK 24 during repository preparation)
+- Eclipse IDE for Java Developers
+- MySQL or MariaDB
+
+### Setup
+
+1. Clone or download this repository.
+2. In Eclipse, select **File > Import > General > Existing Projects into Workspace** and select the project folder.
+3. Create a new empty database named `panoramski_letovi` using `utf8mb4`.
+4. Import `database/schema.sql`.
+5. Optionally import `database/demo-data.sql` once if you want ready-made fictional demo accounts and sample records.
+6. In **Run > Run Configurations > Java Application**, choose `panorama.GlavnaStr` as the main class.
+7. Under **Environment**, define your own database connection settings:
 
 | Variable | Example |
 | --- | --- |
@@ -78,20 +107,20 @@ Java, Swing, JDBC, MySQL/MariaDB, Apache POI and Eclipse.
 | `DB_USER` | `your_database_user` |
 | `DB_PASSWORD` | `your_database_password` |
 
-7. Use the project root as the working directory so that icons can be loaded, then run the application.
+8. Use the project root as the working directory so the application can load the icons.
+9. Run the application.
 
-Database credentials are read from environment variables and are not included in the source code.
+Database credentials are read from environment variables and are not stored in the source code.
 
-## Database setup
+## Database
 
-The schema was exported from MariaDB 11.8 using HeidiSQL. The application uses MySQL Connector/J and a `jdbc:mysql:` connection URL. Import and end-to-end compatibility have not yet been tested in a local database.
+The included SQL files are intentionally sanitized:
 
-1. Connect to your own local MySQL/MariaDB server in HeidiSQL.
-2. Create a **new, empty** database named `panoramski_letovi`, using `utf8mb4`.
-3. Select that database in HeidiSQL.
-4. Open `database/schema.sql` with **File > Load SQL file**, then execute the script in the selected database.
-5. Optionally load and execute `database/demo-data.sql` **once**, after the schema. It supplies fictional accounts, aircraft, two future flights and one reservation.
-6. Set `DB_URL`, `DB_USER` and `DB_PASSWORD` in Eclipse as described above. These are your own database connection credentials, separate from the application accounts below.
+- `database/schema.sql` contains the database structure only.
+- `database/demo-data.sql` contains fictional local demo data.
+- Original database contents and database connection credentials are not included.
+
+The schema was exported from MariaDB 11.8 using HeidiSQL. The application connects through MySQL Connector/J with a `jdbc:mysql:` connection URL.
 
 ### Demo application accounts
 
@@ -100,20 +129,29 @@ The schema was exported from MariaDB 11.8 using HeidiSQL. The application uses M
 | Administrator | `admin@example.com` | `DemoFlights2026!` |
 | User | `putnik@example.com` | `DemoFlights2026!` |
 
-These are intentionally public, fictional accounts for a local demo. Their stored password hashes match the current application's SHA-256 login implementation. Without the optional demo data the tables are empty and these accounts do not exist.
+These credentials are intentionally public and are only for the fictional local demo dataset.
 
-Both login roles use the `KORISNIK` table. The exported `ADMIN` table is retained for fidelity to the original schema, but the current login implementation does not query it.
+Both login roles use the `KORISNIK` table. The exported `ADMIN` table is retained to reflect the original database schema, but the current login implementation does not query it.
 
-The scripts do not include original database contents or database connection credentials. `schema.sql` creates tables in the database you select; it does not select, create or delete a database. The demo script is intended for a fresh schema, not repeated imports into an existing working database.
+## Security notes
 
-.
+- Database credentials are supplied through `DB_URL`, `DB_USER` and `DB_PASSWORD` environment variables.
+- SQL values are passed with prepared statements in the application database operations.
+- Application passwords are stored as SHA-256 hashes in this academic implementation.
+- For a production application, password hashing should be migrated to a password-specific algorithm such as Argon2 or bcrypt with per-password salts.
 
 ## Validation
 
-- All 27 Java source files compiled during preparation.
-- The included Excel libraries passed a workbook creation and reopening check.
-- Database operations and end-to-end user workflows were not tested during this preparation.
+During repository preparation:
+
+- all 27 Java source files compiled successfully;
+- the included Apache POI libraries passed a workbook creation and reopening check;
+- the Excel export date formatting was corrected and reviewed.
+
+A clean MySQL/MariaDB import and full end-to-end database workflow should be verified on the target machine before treating the project as production-ready.
 
 ## Project context
 
-Academic final-year project by Marko Kos. This repository demonstrates desktop application development, database integration and reporting.
+Academic final-year project by Marko Kos.
+
+The repository is intended to demonstrate practical work with Java desktop development, Swing interfaces, SQL/JDBC database access, role-based application flows and report generation.
