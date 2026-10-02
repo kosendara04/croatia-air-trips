@@ -148,10 +148,10 @@ During repository preparation:
 - the included Apache POI libraries passed a workbook creation and reopening check;
 - the Excel export date formatting was corrected and reviewed.
 
-A clean MySQL/MariaDB import and full end-to-end database workflow should be verified on the target machine before treating the project as production-ready.
+
 
 ## Project context
 
-Academic final-year project by Marko Kos.
+Academic final-year thesis by Marko Kos.
 
 The repository is intended to demonstrate practical work with Java desktop development, Swing interfaces, SQL/JDBC database access, role-based application flows and report generation.
