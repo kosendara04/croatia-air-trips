@@ -12,7 +12,7 @@ Java Swing desktop application for managing panoramic flights, users and flight 
 - Administration of flights, aircraft, users and reservations
 - Reports for reservations, users, flights and aircraft
 - Export of reports to CSV, TXT and Excel (XLSX)
-- MySQL/MariaDB integration through JDBC
+- HeidiSQL/MariaDB integration through JDBC
 - Prepared statements for database operations
 - Database credentials supplied through environment variables rather than hardcoded in source code
 
@@ -21,7 +21,7 @@ Java Swing desktop application for managing panoramic flights, users and flight 
 - Java
 - Swing
 - JDBC
-- MySQL / MariaDB
+- HeidiSQL / MariaDB
 - Apache POI
 - Eclipse IDE
 
